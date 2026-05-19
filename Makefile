@@ -1,12 +1,12 @@
 NAME = inception
 
 all: 
-	mkdir -p /home/megardes/data/wordpress
-	mkdir -p /home/megardes/data/mariadb
-	cd srcs && docker-compose up -d --build
+	sudo mkdir -p /home/megardes/data/wordpress
+	sudo mkdir -p /home/megardes/data/mariadb
+	cd srcs && docker compose up -d --build
 
 clean:
-	cd srcs && docker-compose down
+	cd srcs && docker compose down
 
 fclean: clean
 	docker system prune -af
