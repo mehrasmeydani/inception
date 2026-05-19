@@ -63,5 +63,3 @@ services:
     depends_on:
       - mariadb
 
-
-
