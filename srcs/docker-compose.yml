@@ -18,7 +18,6 @@ networks:
   inception_network:
     name: inception_network
 
-
 services:
   nginx:
     build:
@@ -31,7 +30,7 @@ services:
     depends_on:
       - wordpress
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/wordpress
     networks:
       - inception_network
 
@@ -46,7 +45,7 @@ services:
     networks:
       - inception_network
     env_file:
-      - ../secrets/.env
+      - .env
 
   wordpress:
     build:
@@ -55,11 +54,11 @@ services:
     container_name: wordpress
     restart: always
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/wordpress
     networks:
       - inception_network
     env_file:
-      - ../secrets/.env
+      - .env
     depends_on:
       - mariadb
 

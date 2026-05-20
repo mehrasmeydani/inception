@@ -1,27 +1,44 @@
-#!/bin/bash
-sleep 10 # Wait for mariadb to start
+#!/bin/sh
 
-cd /var/www/html
+set -e
 
-if [ ! -f "wp-config.php" ]; then
-    wp core download --allow-root
+while ! nc -z mariadb 3306; do
+    echo "waiting for database"
+    sleep 2
+done
+
+export PHP_MEMORY_LIMIT=512M
+
+if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
+
+    wp core download --path=/var/www/wordpress --allow-root
+
     wp config create \
-        --dbname=$MYSQL_DATABASE \
-        --dbuser=$MYSQL_USER \
-        --dbpass=$MYSQL_PASSWORD \
-        --dbhost=mariadb:3306 \
-        --allow-root
-    
-    wp core install \
-        --url=$DOMAIN_NAME \
-        --title="Inception" \
-        --admin_user=$MYSQL_USER \
-        --admin_password=$MYSQL_PASSWORD \
-        --admin_email="admin@$DOMAIN_NAME" \
-        --skip-email \
+        --dbname=$DATABASE_NAME \
+        --dbuser=$DATABASE_USER \
+        --dbpass=$DATABASE_PASSWD \
+        --dbhost=mariadb \
+        --path=/var/www/wordpress \
         --allow-root
 
-    wp user create editor editor@$DOMAIN_NAME --role=editor --user_pass=$MYSQL_PASSWORD --allow-root
+    wp core install \
+    --url="https://$DOMAIN_NAME" \
+        --title="Inception" \
+        --admin_user=$WP_ADMIN_USER \
+        --admin_password=$WP_ADMIN_PASSWD \
+        --admin_email=$WP_ADMIN_EMAIL \
+        --path=/var/www/wordpress \
+        --allow-root
+
+    wp user create \
+        $WP_USER $WP_USER_EMAIL \
+        --user_pass=$WP_USER_PASSWD \
+        --role=author \
+        --path=/var/www/wordpress \
+        --allow-root
+
+    echo "wordpress piece of shit startedd"
 fi
 
-exec "$@"
+echo "starting php-fpm"
+exec php-fpm84 -F
