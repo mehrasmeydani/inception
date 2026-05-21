@@ -40,7 +40,7 @@ Once the containers are running:
 
 - **Access WordPress**: Open your browser and navigate to `localhost` or `https://localhost`
 - **Access Services**:
-  - Nginx listens on ports 80 (HTTP) and 443 (HTTPS)
+  - Nginx listens only on port 443 (HTTPS)
   - WordPress runs as a PHP-FPM service
   - MariaDB runs on port 3306 (internal to the Docker network)
 
@@ -59,7 +59,6 @@ Once the containers are running:
 - [Nginx Documentation](https://nginx.org/en/docs/)
 - [WordPress on Docker](https://hub.docker.com/_/wordpress)
 - [MariaDB Documentation](https://mariadb.com/docs/)
-- [OWASP Security Guidelines](https://owasp.org/)
 
 ### AI Usage
 
@@ -91,7 +90,7 @@ The project is organized as follows:
 
 | Aspect | Virtual Machines | Docker Containers |
 |--------|------------------|------------------|
-| **Isolation** | Full OS isolation via hypervisor | Process-level isolation via kernel namespaces |
+| **Isolation** | Full OS isolation | Process-level isolation via kernel |
 | **Startup Time** | Minutes (boot entire OS) | Seconds (start lightweight container) |
 | **Resource Usage** | Heavy (full OS kernel + apps) | Lightweight (shared kernel + app layer) |
 | **Performance** | Near-native but overhead | Native performance with minimal overhead |
@@ -131,7 +130,7 @@ The project is organized as follows:
 | Aspect | Docker Volumes | Bind Mounts |
 |--------|----------------|------------|
 | **Management** | Managed by Docker daemon | Managed by user |
-| **Location** | Docker-managed directory (usually `/var/lib/docker/volumes/`) | Any path on host filesystem |
+| **Location** | Docker-managed directory | Any path on host filesystem |
 | **Performance** | Optimized, better on Docker Desktop | Native performance on Linux, slower on Docker Desktop |
 | **Portability** | Easier to migrate (encapsulated) | Path-dependent (may break on different systems) |
 | **Permissions** | Docker manages permissions | User manages permissions |
@@ -154,8 +153,6 @@ This approach balances development flexibility with production-readiness and dat
 1. **Docker Engine**: The core runtime that executes containers. It manages images, containers, networks, and storage.
 2. **Docker Images**: Read-only blueprints containing all necessary files, libraries, and configurations needed to run an application. Images are built from Dockerfiles.
 3. **Docker Containers**: Runtime instances of Docker images. They are lightweight, ephemeral processes that execute in isolation from the host system.
-4. **Image Layers**: Docker images are built in layers, where each instruction in a Dockerfile creates a new layer. This enables efficient caching and reduces image size through layer reuse.
-5. **Namespaces & Cgroups**: Docker uses Linux kernel features (namespaces for isolation, cgroups for resource limits) to provide lightweight virtualization without a full OS kernel per container.
 
 **Workflow**:
 ```
@@ -294,15 +291,16 @@ The Inception project follows a specific directory structure that reflects Docke
 inception/
 ├── Makefile                    # Automation for building and running the project
 ├── README.md                   # Project documentation
+├── DEV_DOC.md
+├── USER_DOC.md
 └── srcs/
+    ├── .env                    # Environment values used by mariadb and wordpress 
     ├── docker-compose.yml      # Orchestration file defining all services
     └── requirements/           # Directory housing Dockerfile for each service
         ├── nginx/
         │   ├── Dockerfile      # Instructions to build Nginx image
         │   ├── conf/
         │   │   └── nginx.conf  # Nginx configuration file
-        │   └── tools/
-        │       └── setup.sh    # Initialization script
         ├── wordpress/
         │   ├── Dockerfile      # Instructions to build WordPress image
         │   └── tools/
