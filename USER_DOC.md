@@ -50,6 +50,11 @@ This command will:
 
 **Expected output**: You'll see messages indicating services are initializing. Wait 1-2 minutes for full startup.
 
+**See all Make commands**:
+```bash
+make help
+```
+
 ### Accessing the Services
 
 Once running, you can access:

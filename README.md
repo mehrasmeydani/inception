@@ -46,9 +46,10 @@ Once the containers are running:
 
 ### Management Commands
 
-- **Stop containers**: `docker-compose down`
-- **View logs**: `docker-compose logs -f [service_name]`
-- **Access a container shell**: `docker-compose exec [service_name] /bin/sh`
+- **Show available rules**: `make help`
+- **Stop containers**: `make clean`
+- **Full cleanup (including data)**: `make fclean`
+- **Remove all Docker resources**: `make purge`
 
 ## Resources
 

@@ -320,11 +320,26 @@ This:
 **Other Make Commands**:
 
 ```bash
+make help       # Show all available Makefile rules
 make clean      # Stop containers (preserve data)
 make good_clean # Stop and remove data
-make fclean     # Complete cleanup (same as good_clean)
+make fclean     # Stop services, remove images/volumes, and prune Docker
 make purge      # Remove ALL Docker resources
 make re         # Rebuild everything from scratch
+```
+
+**Status and diagnostics**:
+
+```bash
+make status         # Project-specific container/volume/network status
+make list-containers
+make list-images
+make list-volumes
+make list-networks
+make list-processes
+make list-logs
+make list-stats
+make volume-paths   # Show volume mountpoints and sizes
 ```
 
 ### Manual Build with Docker Compose
