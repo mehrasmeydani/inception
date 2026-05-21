@@ -1,8 +1,29 @@
 NAME = inception
 
-all: 
+all: env
 	sudo grep -q "megardes.42.fr" /etc/hosts || sudo sh -c 'echo "127.0.0.1 megardes.42.fr" >> /etc/hosts'
 	cd srcs && docker compose up --build
+
+env:
+	@if [ ! -f srcs/.env ]; then \
+		echo "DOMAIN_NAME=" > srcs/.env.sample; \
+		echo "EMAIL_ADDRESS=" >> srcs/.env.sample; \
+		echo "" >> srcs/.env.sample; \
+		echo "DATABASE_NAME=" >> srcs/.env.sample; \
+		echo "DATABASE_ROOT_PASSWD=" >> srcs/.env.sample; \
+		echo "" >> srcs/.env.sample; \
+		echo "DATABASE_USER=" >> srcs/.env.sample; \
+		echo "DATABASE_PASSWD=" >> srcs/.env.sample; \
+		echo "" >> srcs/.env.sample; \
+		echo "WP_ADMIN_USER=" >> srcs/.env.sample; \
+		echo "WP_ADMIN_PASSWD=" >> srcs/.env.sample; \
+		echo "WP_ADMIN_EMAIL=" >> srcs/.env.sample; \
+		echo "" >> srcs/.env.sample; \
+		echo "WP_USER=" >> srcs/.env.sample; \
+		echo "WP_USER_PASSWD=" >> srcs/.env.sample; \
+		echo "WP_USER_EMAIL=" >> srcs/.env.sample; \
+		echo "\033[0;31mWARNING: A default srcs/.env.sample file was created. Please review and change the default passwords/values before proceeding!\033[0m"; \
+	fi
 
 clean:
 	cd srcs && docker compose down
