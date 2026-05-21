@@ -18,6 +18,6 @@ fclean: clean
 	sudo rm -rf /home/megardes/data/wordpress/*
 	sudo rm -rf /home/megardes/data/mariadb/*
 
-re: fclean all
+re: good_clean all
 
 .PHONY: all clean fclean re

@@ -1,10 +1,11 @@
-FROM alpine:3.23
+FROM alpine:3.22
 
 RUN apk add --no-cache \
-    php84-fpm php84-mysqli php84-phar php84-iconv \
+    php84 php84-fpm php84-mysqli php84-phar php84-iconv \
     php84-mbstring php84-curl php84-dom php84-xml \
     php84-openssl php84-json php84-tokenizer \
-    mysql-client wget curl tar busybox-extras fcgi
+    mysql-client wget curl tar busybox-extras fcgi \
+    && ln -s /usr/bin/php84 /usr/bin/php
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x wp-cli.phar \

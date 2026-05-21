@@ -2,11 +2,6 @@
 
 set -e
 
-while ! nc -z mariadb 3306; do
-    echo "waiting for database"
-    sleep 2
-done
-
 export PHP_MEMORY_LIMIT=512M
 
 if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
@@ -37,7 +32,7 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
         --path=/var/www/wordpress \
         --allow-root
 
-    echo "wordpress piece of shit startedd"
+    echo "Wordpress was created Successfuly!"
 fi
 
 echo "starting php-fpm"
