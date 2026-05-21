@@ -2,9 +2,10 @@
 set -e
 
 if [ ! -d "/var/lib/mysql/mysql" ]; then
-    mariadb-install-db --user=mysql --datadir=/var/lib/mysql
+    echo "Creating Database!"
+    mariadb-install-db  
 
-    /usr/bin/mysqld --user=mysql --bootstrap << EOF
+    /usr/bin/mysqld --bootstrap << EOF
 FLUSH PRIVILEGES;
 CREATE DATABASE IF NOT EXISTS \`${DATABASE_NAME}\`;
 
@@ -17,6 +18,7 @@ IDENTIFIED BY '${DATABASE_ROOT_PASSWD}';
 
 FLUSH PRIVILEGES;
 EOF
+echo "DATABASE CREATED!"
 fi
 
-exec /usr/bin/mysqld --user=mysql --console
+exec /usr/bin/mysqld --console
