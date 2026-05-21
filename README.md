@@ -63,10 +63,8 @@ Once the containers are running:
 ### AI Usage
 
 AI was used in the following areas:
-- **Setup Script Generation**: Creation of container setup scripts (`setup.sh`) for Nginx, WordPress, and MariaDB initialization
-- **Docker Configuration**: Guidance on Dockerfile best practices and multi-stage builds
-- **Documentation**: Structuring documentation and explaining Docker concepts
-- **Troubleshooting**: Identifying common issues with container networking and volume mounts
+- Research and drafting the Markdown files and `Makefile` rules.
+
 
 ## Project Architecture & Docker Design Choices
 
