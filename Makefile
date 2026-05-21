@@ -96,10 +96,10 @@ volume-paths:
 		fi; \
 	done
 
-help -h:
+help:
 	@echo "\n${NAME} - Makefile Help" && \
 	echo "================================\n" && \
-	echo "USAGE: make <rule> [options]\n" && \
+	echo "USAGE: make <rule>\n" && \
 	echo "BUILD & LIFECYCLE RULES:" && \
 	echo "  all              - Build and start all services (Nginx, WordPress, MariaDB)" && \
 	echo "  clean            - Stop containers (preserve data)" && \
@@ -120,7 +120,7 @@ help -h:
 	echo "  ps               - Quick table: container names, status, and ports" && \
 	echo "  status           - Project-specific status (inception containers/volumes/networks)" && \
 	echo "\nHELP:" && \
-	echo "  help, -h         - Show this help message\n" && \
+	echo "  help	         - Show this help message\n" && \
 	echo "EXAMPLES:" && \
 	echo "  make              - Start the project" && \
 	echo "  make clean        - Stop containers" && \
