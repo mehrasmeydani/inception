@@ -6,13 +6,16 @@ export PHP_MEMORY_LIMIT=512M
 
 if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 
-    wp core download --path=/var/www/wordpress --allow-root
+    # Check if WordPress is already downloaded, if not download it
+    if [ ! -f "/var/www/wordpress/wp-settings.php" ]; then
+        wp core download --path=/var/www/wordpress --allow-root
+    fi
 
     wp config create \
         --dbname=$DATABASE_NAME \
         --dbuser=$DATABASE_USER \
         --dbpass=$DATABASE_PASSWD \
-        --dbhost=mariadb \
+        --dbhost=mariadb:3306 \
         --path=/var/www/wordpress \
         --allow-root
 
